@@ -9,9 +9,10 @@ import SwiftUI
 
 @main
 struct ClientApp: App {
+    private let webSocketManager = WebSocketManager.shared
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TrajectoryView()
         }
     }
 }

@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		793950A92DA2AA8E00E608E8 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 793950A82DA2AA8E00E608E8 /* Starscream */; };
+		796334D22D993F5600708B27 /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 796334D12D993F5600708B27 /* SlidingTabView */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		7995A89D2D9932BA0088D12D /* Client.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Client.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				796334D22D993F5600708B27 /* SlidingTabView in Frameworks */,
+				793950A92DA2AA8E00E608E8 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = Client;
 			packageProductDependencies = (
+				796334D12D993F5600708B27 /* SlidingTabView */,
+				793950A82DA2AA8E00E608E8 /* Starscream */,
 			);
 			productName = Client;
 			productReference = 7995A89D2D9932BA0088D12D /* Client.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 7995A8942D9932BA0088D12D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				796334D02D993F5600708B27 /* XCRemoteSwiftPackageReference "SlidingTabView" */,
+				793950A72DA2AA8E00E608E8 /* XCRemoteSwiftPackageReference "Starscream" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7995A89E2D9932BA0088D12D /* Products */;
 			projectDirPath = "";
@@ -177,7 +190,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -234,7 +247,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -260,6 +273,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -289,6 +303,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,6 +339,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		793950A72DA2AA8E00E608E8 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+		796334D02D993F5600708B27 /* XCRemoteSwiftPackageReference "SlidingTabView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/QuynhNguyen/SlidingTabView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		793950A82DA2AA8E00E608E8 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 793950A72DA2AA8E00E608E8 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		796334D12D993F5600708B27 /* SlidingTabView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 796334D02D993F5600708B27 /* XCRemoteSwiftPackageReference "SlidingTabView" */;
+			productName = SlidingTabView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7995A8952D9932BA0088D12D /* Project object */;
 }
