@@ -30,7 +30,7 @@ struct TrafficView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(alignment: .leading){
-                Text("Traffic View")
+                Text("Trajectory View")
                     .foregroundStyle(.white)
                     .padding(.top, 70)
                     .padding(.horizontal)

@@ -22,7 +22,7 @@ class WebSocketManager: ObservableObject {
     }
     
     private func setupWebSocket() {
-        guard let url = URL(string: "ws://192.168.0.103:8080/ws") else { return }
+        guard let url = URL(string: "ws://\(ClientApp.IPserver)8080/ws") else { return }
         socket = WebSocket(request: URLRequest(url: url))
         socket.delegate = self
         socket.connect()

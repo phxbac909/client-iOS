@@ -9,7 +9,7 @@
 import Foundation
 
 class DataService {
-    private let baseURL = "http://192.168.0.103:8080/data" // Replace with your actual API URL
+    private let baseURL = "http://\(ClientApp.IPserver):8080/data" // Replace with your actual API URL
     private let session: URLSession
     
     public static let shared = DataService()

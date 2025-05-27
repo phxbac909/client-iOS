@@ -14,7 +14,7 @@ struct ContentView: View {
                 Label("Statistic", systemImage: "chart.bar")
             }
             TrafficView().tabItem{
-                Label("Traffic",systemImage: "car.2")
+                Label("Trajectory",systemImage: "car.2")
             }
             RemoteView().tabItem{
                 Label("Remote",systemImage: "av.remote")

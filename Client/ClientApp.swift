@@ -9,10 +9,13 @@ import SwiftUI
 
 @main
 struct ClientApp: App {
+    
+    static let IPserver = "192.168.0.102";
+    
     private let webSocketManager = WebSocketManager.shared
     var body: some Scene {
         WindowGroup {
-            TrajectoryView()
+            ContentView()
         }
     }
 }
