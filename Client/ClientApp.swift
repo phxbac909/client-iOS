@@ -15,7 +15,7 @@ struct ClientApp: App {
     private let webSocketManager = WebSocketManager.shared
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TrafficView()
         }
     }
 }

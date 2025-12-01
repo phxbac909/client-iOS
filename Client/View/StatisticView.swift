@@ -17,8 +17,8 @@ struct DataPoint: Identifiable {
 
 struct StatisticView: View {
     
-    let tabs = ["thermometer.sun","pencil.and.ruler","rectangle.compress.vertical","scale.3d"]
-    let tabName = ["Temperature","Height","Pressure","Statistics"]
+    let tabs = ["thermometer.sun","pencil.and.ruler","rectangle.compress.vertical"]
+    let tabName = ["Nhiệt độ","Độ cao","Áp suất","Statistics"]
     let tabColor : [Color] = [ .red, .green, .blue , .black ]
    
     @State var tabIndex = 0
@@ -48,7 +48,7 @@ struct StatisticView: View {
         points.map({$0.value}).min() ?? 0
     }
     private var average : Double {
-        Double(points.map({$0.value}).reduce(0, +) / Double( points.count) ?? 0)
+        Double(points.map({$0.value}).reduce(0, +) / Double( points.count))
     }
     
     var body: some View {
@@ -57,7 +57,7 @@ struct StatisticView: View {
             if #available(iOS 17.0, *) {
                 VStack(spacing: 0) {
                     VStack(alignment: .leading){
-                        Text("Statistics")
+                        Text("Thống kê")
                             .foregroundStyle(.white)
                             .padding(.top, 70)
                             .padding(.horizontal)
@@ -71,13 +71,7 @@ struct StatisticView: View {
                     .background(Color.primaryColor)
                     
                     VStack{
-                        switch tabIndex {
-                        case 3:
-                            Model3dTab
-                            Spacer()
-                        default:
                             DataTab
-                        }
                     }
                     .gesture(
                         DragGesture()
@@ -115,23 +109,23 @@ struct StatisticView: View {
     private var DataTab : some View {
         VStack {
             
-            HStack (alignment : .center){
-                Text("Date ").fontWeight(.bold).padding(.top).padding(.horizontal)
-                
-                DatePicker(selection: $date, in: ...Date.now, displayedComponents: .date) {
-                              Text("")
-                }.tint(.primaryColor)
-                    .padding()
-              
-            }
-            .background(.white)
-            .cornerRadius(10)
-            .padding()
-            .shadow(radius: 0.3)
+//            HStack (alignment : .center){
+//                Text("Ngày ").fontWeight(.bold).padding(.top).padding(.horizontal)
+//                
+//                DatePicker(selection: $date, in: ...Date.now, displayedComponents: .date) {
+//                              Text("")
+//                }.tint(.primaryColor)
+//                    .padding()
+//              
+//            }
+//            .background(.white)
+//            .cornerRadius(10)
+//            .padding()
+//            .shadow(radius: 0.3)
 
 
             VStack (alignment : .leading){
-                Text("Chart  \(tabName[tabIndex])").fontWeight(.bold).padding(.top).padding(.horizontal)
+                Text("Biểu đồ  \(tabName[tabIndex])").fontWeight(.bold).padding(.top).padding(.horizontal)
                 Chart(points){
                     data in
                     LineMark(
@@ -140,7 +134,7 @@ struct StatisticView: View {
                     )
                     .foregroundStyle(tabColor[tabIndex])
                 }
-                .frame(height: 170)
+                .frame(height: 250)
                 .padding()
                 .chartYAxis {
                     AxisMarks(position: .trailing) {
@@ -165,16 +159,16 @@ struct StatisticView: View {
 
             
             VStack (alignment : .leading){
-                Text("Record \(tabName[tabIndex]) ").fontWeight(.bold).padding(.top).padding(.horizontal)
+                Text("Thống kê \(tabName[tabIndex]) ").fontWeight(.bold).padding(.top).padding(.horizontal)
                 LazyVGrid(columns: [ GridItem(.flexible()),
                                      GridItem(.flexible())],spacing: 20,  content: {
-                    Text("Largest   : ").font(.body)
+                    Text("Lớn nhất   : ").font(.body)
                     Text(formattedNumber(largest))
                         .fontWeight(.semibold).font(.headline)
-                    Text("Smallest : ").font(.body)
+                    Text("Nhỏ nhất : ").font(.body)
                     Text(formattedNumber(smallest))
                         .fontWeight(.semibold).font(.headline)
-                    Text("Average : ").font(.body)
+                    Text("Trung bình : ").font(.body)
                     Text(formattedNumber(average))
                         .fontWeight(.semibold).font(.headline)
 
@@ -187,35 +181,35 @@ struct StatisticView: View {
             Spacer()
         }
     }
-    private var Model3dTab : some View {
-        VStack (alignment : .leading){
-            Text("Posture Satellite ").fontWeight(.bold).padding(.top).padding(.horizontal)
-            SCNViewContainer(scene: Content3DView.loadMultipleObjModels())
-                .frame(height: 300).padding()
-            VStack (alignment : .leading){
-
-                LazyVGrid(columns: [ GridItem(.flexible()),
-                                     GridItem(.flexible())],spacing: 20,  content: {
-                    Text("Largest   : ").font(.body)
-                    Text(formattedNumber(largest))
-                        .fontWeight(.semibold).font(.headline)
-                    Text("Smallest : ").font(.body)
-                    Text(formattedNumber(smallest))
-                        .fontWeight(.semibold).font(.headline)
-                    Text("Average : ").font(.body)
-                    Text(formattedNumber(average))
-                        .fontWeight(.semibold).font(.headline)
-
-                }).padding()
-            }
-        }
-        .background(.white)
-        .cornerRadius(10)
-        .padding(.top, 16)
-        .padding(.bottom, 40)
-        .padding(.horizontal)
-        .shadow(radius: 0.3)
-    }
+//    private var Model3dTab : some View {
+//        VStack (alignment : .leading){
+//            Text("Posture Satellite ").fontWeight(.bold).padding(.top).padding(.horizontal)
+//            SCNViewContainer(scene: Content3DView.loadMultipleObjModels())
+//                .frame(height: 300).padding()
+//            VStack (alignment : .leading){
+//
+//                LazyVGrid(columns: [ GridItem(.flexible()),
+//                                     GridItem(.flexible())],spacing: 20,  content: {
+//                    Text("Largest   : ").font(.body)
+//                    Text(formattedNumber(largest))
+//                        .fontWeight(.semibold).font(.headline)
+//                    Text("Smallest : ").font(.body)
+//                    Text(formattedNumber(smallest))
+//                        .fontWeight(.semibold).font(.headline)
+//                    Text("Average : ").font(.body)
+//                    Text(formattedNumber(average))
+//                        .fontWeight(.semibold).font(.headline)
+//
+//                }).padding()
+//            }
+//        }
+//        .background(.white)
+//        .cornerRadius(10)
+//        .padding(.top, 16)
+//        .padding(.bottom, 40)
+//        .padding(.horizontal)
+//        .shadow(radius: 0.3)
+//    }
     func formattedNumber(_ value: Double) -> String {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal

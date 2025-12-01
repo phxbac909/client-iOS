@@ -1,89 +1,110 @@
-//
-//  MapView.swift
-//  Client
-//
-//  Created by TTC on 30/3/25.
-//
-
 import SwiftUI
 import MapKit
 
 struct TrafficView: View {
     
-    let routes = [
-            [
-                CLLocationCoordinate2D(latitude: 20.995021, longitude: 105.857055), // Hồ Hoàn Kiếm
-                CLLocationCoordinate2D(latitude: 20.995347, longitude: 105.854779), // Điểm giữa
-            ],
-            [
-                CLLocationCoordinate2D(latitude: 20.997229, longitude: 105.850147), // Lăng Bác
-                CLLocationCoordinate2D(latitude: 21.002578 , longitude: 105.850898), // Điểm giữa
-            ],
-            [
-                CLLocationCoordinate2D(latitude: 20.982568  , longitude: 105.864015), // Nhà thờ Lớn
-                CLLocationCoordinate2D(latitude: 20.976902, longitude: 105.865534)  // Cầu Long Biên
-            ]
-        ]
-    @State private var route: MKRoute?
+    @State var data = [
+        DataTraffic(quantity: 5, timestart: Date(), timeend: Date().addingTimeInterval(TimeInterval(120)),coordinate: CLLocationCoordinate2D(latitude: 20.184257, longitude: 106.238209)),
+        DataTraffic(quantity: 7, timestart: Date(), timeend: Date().addingTimeInterval(TimeInterval(115)), coordinate: CLLocationCoordinate2D(latitude: 20.18308437940721, longitude: 106.2384722702011)),
+        DataTraffic(quantity: 1, timestart: Date(),timeend: Date().addingTimeInterval(TimeInterval(117)), coordinate: CLLocationCoordinate2D(latitude: 20.185419, longitude: 106.238224))
+    ]
+        
     @State private var region = MKCoordinateRegion()
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(alignment: .leading){
-                Text("Trajectory View")
-                    .foregroundStyle(.white)
-                    .padding(.top, 70)
-                    .padding(.horizontal)
-                    .font(.largeTitle)
-                    .fontWeight(.semibold)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.primaryColor)
-            VStack{
+            TitleView()
             
-                if #available(iOS 17.0, *) {
-                    Map(coordinateRegion: $region, annotationItems: routes.map({ Route(coordinates: $0) })) { route in
-                        // Đánh dấu điểm đầu tuyến
-                        MapMarker(coordinate: route.coordinates[0])
-                    }
-                    .overlay(
-                        // Vẽ các tuyến đường riêng
-                        Map{
-                            ForEach(routes.map({ Route(coordinates: $0) }), id: \.id) { route in
-                                MapPolyline(coordinates: route.coordinates)
-                                    .stroke(.red, style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                            }
-                        }
-                    )
-                } else {
-                    Spacer()
-                    Text("MapView in available in ios17 or newer ")
-                    Spacer()
+            Map(coordinateRegion: $region, annotationItems: data) { item in
+                MapAnnotation(coordinate: item.coordinate) {
+                    let isLatest = item.id == data.last?.id
+                    TrafficInfoView(d: item, latest: isLatest)
                 }
-                    
-            }.onAppear {
-                let allCoordinates = routes.flatMap { $0 }
-                let polylines = routes.map {
-                    MKPolyline(coordinates: $0, count: $0.count)
-                }
-                let mapRects = polylines.map { $0.boundingMapRect }
-                let combinedRect = mapRects.reduce(MKMapRect.null) { $0.union($1) }
-                region = MKCoordinateRegion(combinedRect)
             }
         }
-        .frame(maxWidth :.infinity)
+        .frame(maxWidth: .infinity)
         .background(Color.primary.opacity(0.05))
         .edgesIgnoringSafeArea(.all)
-        
+        .onAppear {
+            setupRegion()
+        }
     }
-   
-
+    
+    private func setupRegion() {
+        guard !data.isEmpty else { return }
+        
+        let coordinates = data.map { $0.coordinate }
+        
+        let minLat = coordinates.min { $0.latitude < $1.latitude }?.latitude ?? 0
+        let maxLat = coordinates.max { $0.latitude < $1.latitude }?.latitude ?? 0
+        let minLon = coordinates.min { $0.longitude < $1.longitude }?.longitude ?? 0
+        let maxLon = coordinates.max { $0.longitude < $1.longitude }?.longitude ?? 0
+        
+        let centerLat = (minLat + maxLat) / 2
+        let centerLon = (minLon + maxLon) / 2
+        let latDelta = (maxLat - minLat) * 2
+        let lonDelta = (maxLon - minLon) * 2
+        
+        region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: centerLat, longitude: centerLon),
+            span: MKCoordinateSpan(
+                latitudeDelta: max(latDelta, 0.001),
+                longitudeDelta: max(lonDelta, 0.001)
+            )
+        )
+    }
 }
+
+struct TitleView: View {
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("Giao thông")
+                .foregroundStyle(.white)
+                .padding(.top, 70)
+                .padding(.horizontal)
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.primaryColor)
+    }
+}
+
+struct TrafficInfoView: View {
+    var d: DataTraffic
+    var latest: Bool
+    
+    var body: some View {
+        VStack(spacing: 0) {
+            VStack {
+                VStack {
+                    Label(d.timestart.ISO8601Format(), systemImage: "calendar")
+
+                    if (latest ) {
+                        Text("Vị trí đang được khảo sát")
+                        Label("Hiện tại đang có : \(d.quantity) xe", systemImage: "moped.fill")
+
+                    }
+                    else {
+                        Label(" Đã khảo sát trong : \(Int(d.timeend.timeIntervalSince(d.timestart))) giây ", systemImage: "timer")
+                        Label("Tổng đếm được : \(d.quantity) xe", systemImage: "moped.fill")
+
+
+                    }
+                }
+                .padding(5)
+            }
+            .background(latest ? .orange : .white)
+            .cornerRadius(10)
+            
+            Image(systemName: "triangle.fill")
+                .foregroundColor(latest ? .orange : .white)
+                .rotationEffect(.degrees(180))
+                .offset(y: -2)
+        }
+    }
+}
+
 #Preview {
     TrafficView()
 }
-struct Route: Identifiable {
-    let id = UUID()
-    let coordinates: [CLLocationCoordinate2D]
-}
-

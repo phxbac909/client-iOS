@@ -11,13 +11,16 @@ struct ContentView: View {
     var body: some View {
         TabView{
             StatisticView().tabItem{
-                Label("Statistic", systemImage: "chart.bar")
+                Label("Thông số", systemImage: "chart.bar")
+            }
+            TrajectoryView().tabItem{
+                Label("Quỹ đạo",systemImage: "location.fill")
+            }
+            Model3DView().tabItem {
+                Label("Tu thế", systemImage: "scale.3d")
             }
             TrafficView().tabItem{
-                Label("Trajectory",systemImage: "car.2")
-            }
-            RemoteView().tabItem{
-                Label("Remote",systemImage: "av.remote")
+                Label("Giao Thông",systemImage: "car.2")
             }
             
         }
